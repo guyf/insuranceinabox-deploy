@@ -24,7 +24,7 @@ Stop ssh hassling you by adding this to your .ssh/config:
 Credentials
 ===========
 
-This project requires a /credentials folder that contains secrets not checked into github.
+This project requires secrets that are not checked into github.
 
 * `.chef/` contains opscode server credentials.
 * `../credentials/aws/` contains AWS credentials.
