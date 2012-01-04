@@ -7,6 +7,7 @@ version          "0.0.1"
 recipe            "iab_server", "Install IAB Server from github into Apache/WSGI with a new MySQL database"
 
 depends "mysql"
+depends "database"
 depends "apache2"
 depends "django"
 depends "application"

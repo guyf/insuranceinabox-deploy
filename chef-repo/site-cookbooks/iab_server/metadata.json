@@ -3,6 +3,7 @@
     "mysql": ">= 0.0.0",
     "application": ">= 0.0.0",
     "django": ">= 0.0.0",
+    "database": ">= 0.0.0",
     "apache2": ">= 0.0.0"
   },
   "name": "iab_server",

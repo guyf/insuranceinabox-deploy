@@ -10,10 +10,8 @@
 deploy_to = data_bag_item("apps", "iab_server")['deploy_to']
 
 package "git"
-
-include_recipe "apache2"
-include_recipe "django"
 include_recipe "application"
+include_recipe "database"
 
 # app = node.run_state[:current_app]
 # server_aliases = [ "#{app['id']}.#{node['domain']}", node.fqdn ]
@@ -39,6 +37,19 @@ template "#{deploy_to}/current/django.wsgi" do
   source "django.wsgi.erb"
   mode 0666
   variables({:deploy_to=>deploy_to})
+end
+
+# create a database for IAB, then create a user with access to the new database instance
+mysql_connection_info = {:host => 'localhost', :username => 'root', :password => node['mysql']['server_root_password']}
+mysql_database 'iab_db' do
+  connection mysql_connection_info
+  action :create
+end
+mysql_database_user 'iab' do
+  connection mysql_connection_info
+  password 'ia4bbb'
+  action :create
+  action :grant
 end
 
 ############################
