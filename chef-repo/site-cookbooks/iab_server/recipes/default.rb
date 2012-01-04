@@ -7,6 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# install PIL
+package "python-imaging"
+
 # create a database for IAB, then create a user with access to the new database instance
 include_recipe "database"
 mysql_connection_info = {:host => 'localhost', :username => 'root', :password => node['mysql']['server_root_password']}
