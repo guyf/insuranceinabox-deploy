@@ -7,20 +7,35 @@
 # All rights reserved - Do Not Redistribute
 #
 
-deploy_to = data_bag_item("apps", "iab_server")['deploy_to']
+# create a database for IAB, then create a user with access to the new database instance
+include_recipe "database"
+mysql_connection_info = {:host => 'localhost', :username => 'root', :password => node['mysql']['server_root_password']}
+mysql_database 'iab_db' do
+  connection mysql_connection_info
+  action :create
+end
+mysql_database_user 'iab' do
+  connection mysql_connection_info
+  password 'ia4bbb'
+  action :create
+  action :grant
+end
 
+# install the python mysql driver
+package "python-mysqldb"
+
+# pull down the app from github
+deploy_to = data_bag_item("apps", "iab_server")['deploy_to']
 package "git"
 include_recipe "application"
-include_recipe "database"
 
-# app = node.run_state[:current_app]
-# server_aliases = [ "#{app['id']}.#{node['domain']}", node.fqdn ]
+# work out what this node is called for apache
 server_aliases = [ node.fqdn ]
-
 if node.has_key?("ec2")
   server_aliases << node.ec2.public_hostname
 end
 
+# set up the app as a web_app served by apache
 web_app "iab_server" do
   if node.has_key?("ec2")
     server_name node.ec2.public_hostname
@@ -37,19 +52,6 @@ template "#{deploy_to}/current/django.wsgi" do
   source "django.wsgi.erb"
   mode 0666
   variables({:deploy_to=>deploy_to})
-end
-
-# create a database for IAB, then create a user with access to the new database instance
-mysql_connection_info = {:host => 'localhost', :username => 'root', :password => node['mysql']['server_root_password']}
-mysql_database 'iab_db' do
-  connection mysql_connection_info
-  action :create
-end
-mysql_database_user 'iab' do
-  connection mysql_connection_info
-  password 'ia4bbb'
-  action :create
-  action :grant
 end
 
 ############################
