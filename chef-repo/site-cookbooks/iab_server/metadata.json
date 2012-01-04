@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "application": ">= 0.0.0",
+    "django": ">= 0.0.0",
+    "apache2": ">= 0.0.0"
+  },
+  "name": "key_value_server",
+  "maintainer_email": "stevemeyfroidt@ifapps.co.uk",
+  "attributes": {
+  },
+  "license": "All rights reserved",
+  "suggestions": {
+  },
+  "platforms": {
+  },
+  "maintainer": "iFapps Ltd",
+  "long_description": "= DESCRIPTION:\n\nInstall the Key/Value Server under Apache/WSGI.\n\n************************************************\n**** THIS SHOULD BE CODE THAT GETS INVOKED AFTER THE APP IS INSTALLED BY recipe[application].\n**** Or make this depend on recipe[application]\n**** And anyway, we should always syncdb after pulling from git\n************************************************\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "version": "0.0.1",
+  "recommendations": {
+  },
+  "recipes": {
+    "key_value_server": "Install Key/Value Server from github into Apache/WSGI"
+  },
+  "groupings": {
+  },
+  "conflicting": {
+  },
+  "replacing": {
+  },
+  "description": "Installs Key/Value Server to Apache/WSGI",
+  "providing": {
+  }
+}

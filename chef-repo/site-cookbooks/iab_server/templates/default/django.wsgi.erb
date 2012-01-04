@@ -1,0 +1,21 @@
+import site
+import os
+import sys
+
+prev_sys_path = list(sys.path)
+
+# add virtualenv stuff
+site.addsitedir('/var/iab_server/shared/env/lib/python2.6')
+
+# add the app
+sys.path.append('<%= @deploy_to %>/current')
+
+# reorder sys.path so new directories from the addsitedir show up first
+new_sys_path = [p for p in sys.path if p not in prev_sys_path]
+for item in new_sys_path:
+    sys.path.remove(item)
+sys.path[:0] = new_sys_path
+
+import django.core.handlers.wsgi
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings.live'
+application = django.core.handlers.wsgi.WSGIHandler()
