@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-deploy_to = data_bag_item("apps", "key_value_server")['deploy_to']
+deploy_to = data_bag_item("apps", "iab_server")['deploy_to']
 
 package "git"
 
@@ -23,7 +23,7 @@ if node.has_key?("ec2")
   server_aliases << node.ec2.public_hostname
 end
 
-web_app "key_value_server" do
+web_app "iab_server" do
   if node.has_key?("ec2")
     server_name node.ec2.public_hostname
   else
